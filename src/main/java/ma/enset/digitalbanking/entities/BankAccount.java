@@ -21,7 +21,6 @@ public class BankAccount {
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
     @ManyToOne
-    private Customer customer;
-    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Customer customer;@OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY)
     private List<AccountOperation> accountOperations;
 }
