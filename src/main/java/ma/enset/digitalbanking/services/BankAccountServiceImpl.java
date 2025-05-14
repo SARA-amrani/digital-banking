@@ -10,7 +10,6 @@ import ma.enset.digitalbanking.exceptions.CustomerNotFoundException;
 import ma.enset.digitalbanking.repositories.AccountOperationRepository;
 import ma.enset.digitalbanking.repositories.BankAccountRepository;
 import ma.enset.digitalbanking.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -117,5 +116,10 @@ public class BankAccountServiceImpl implements BankAccountService {
         debit(accountIdSource,amount,"Transfer to "+ accountIdDestination);
         credit(accountIdDestination,amount,"Transfer from "+accountIdSource);
 
+    }
+
+    @Override
+    public List<BankAccount> bankAccountList(){
+        return bankAccountRepository.findAll();
     }
 }
