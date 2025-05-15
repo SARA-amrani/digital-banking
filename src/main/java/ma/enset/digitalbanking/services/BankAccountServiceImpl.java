@@ -2,10 +2,7 @@ package ma.enset.digitalbanking.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.enset.digitalbanking.dtos.BankAccountDTO;
-import ma.enset.digitalbanking.dtos.CurrentBankAccountDTO;
-import ma.enset.digitalbanking.dtos.CustomerDTO;
-import ma.enset.digitalbanking.dtos.SavingBankAccountDTO;
+import ma.enset.digitalbanking.dtos.*;
 import ma.enset.digitalbanking.entities.*;
 import ma.enset.digitalbanking.enums.OperationType;
 import ma.enset.digitalbanking.exceptions.BalanceNotSufficientException;
@@ -173,6 +170,12 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public void deleteCustomer(Long customerID){
         customerRepository.deleteById(customerID);
+    }
+
+    @Override
+    public List<AccountOperationDTO> accountHistory(String accountId) {
+        List<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId);
+        return accountOperations.stream().map(op -> dtoMapper.fromAccountOperation(op)).collect(Collectors.toList());
     }
 
 }
