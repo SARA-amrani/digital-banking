@@ -2,20 +2,24 @@ package ma.enset.digitalbanking.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ma.enset.digitalbanking.dtos.CustomerDTO;
 import ma.enset.digitalbanking.entities.*;
 import ma.enset.digitalbanking.enums.OperationType;
 import ma.enset.digitalbanking.exceptions.BalanceNotSufficientException;
 import ma.enset.digitalbanking.exceptions.BankAccountNotFoundException;
 import ma.enset.digitalbanking.exceptions.CustomerNotFoundException;
+import ma.enset.digitalbanking.mappers.BankAccountMapperImpl;
 import ma.enset.digitalbanking.repositories.AccountOperationRepository;
 import ma.enset.digitalbanking.repositories.BankAccountRepository;
 import ma.enset.digitalbanking.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +29,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     private CustomerRepository customerRepository;
     private BankAccountRepository bankAccountRepository;
     private AccountOperationRepository accountOperationRepository;
+    private BankAccountMapperImpl dtoMapper;
 
 
     @Override
@@ -70,8 +75,12 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public List<Customer> listCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        List<CustomerDTO> customerDTOS = customers.stream()
+                .map(customer -> dtoMapper.fromCustomer(customer))
+                .collect(Collectors.toList());
+        return customerDTOS;
     }
 
     @Override
