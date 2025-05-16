@@ -110,7 +110,6 @@ public class DigitalBankingApplication {
                     accountOperationRepository.save(accountOperation);
 
                 }
-
             });
         };
     }
