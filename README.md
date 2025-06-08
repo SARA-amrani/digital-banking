@@ -1,4 +1,4 @@
-# Digital Banking Application - Spring Boot
+# Digital Banking Application - Backend -Spring Boot
 
 Le projet **Digital Banking**, est une application de gestion de comptes bancaires réalisée avec **Spring
 Boot**. Ce projet illustre les concepts essentiels du développement backend moderne, comme les DTOs, la sécurité, les
